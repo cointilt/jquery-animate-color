@@ -1,3 +1,6 @@
+// jQuery Animate Color
+// @cointilt
+// version 1
 (function ($) {
     "use strict";
 
@@ -38,7 +41,7 @@
     };
 
     // translate color
-    Color.translate = function (css) {
+    Color.convertRGBA = function (css) {
         var test = /#([0-9a-fA-F]{2})([0-9a-fA-F]{2})([0-9a-fA-F]{2})/.exec(css),
             test2 = /#([0-9a-fA-F])([0-9a-fA-F])([0-9a-fA-F])/.exec(css),
             test3 = /rgb\(\s*([0-9]{1,3})\s*,\s*([0-9]{1,3})\s*,\s*([0-9]{1,3})\s*\)/.exec(css),
@@ -77,25 +80,27 @@
     };
 
     // Extend jQuery support with RGBA (create function and self)
-    $.extend(true, $, {support: { rgba: Color.hasRGBA() }});
+    $.extend(true, $, {
+        support: {
+            rgba: Color.hasRGBA()
+        }
+    });
 
-    for (var i in Color.props) {
-        var prop = Color.props[i];
-
-        $.Tween.propHooks[prop] = {
-            get: function (type) {
-                return $(type.elem).css(prop);
+    $.each(Color.props, function (i, property) {
+        $.Tween.propHooks[property] = {
+            get: function (tween) {
+                return $(tween.elem).css(property);
             },
 
-            set: function (type) {
-                var style = type.elem.style,
-                    start = Color.translate($(type.elem).css(prop)),
-                    end = Color.translate(type.end);
+            set: function (tween) {
+                var style = tween.elem.style,
+                    start = Color.convertRGBA($(tween.elem).css(property)),
+                    end = Color.convertRGBA(tween.end);
 
-                type.run = function (so_far) {
-                    style[prop] = Color.createColor(start, end, so_far);
+                tween.run = function (so_far) {
+                    style[property] = Color.createColor(start, end, so_far);
                 };
             }
         };
-    }
+    });
 }(jQuery));
