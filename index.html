@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>jQuery Animate Color</title>
+
+    <style>
+        body {
+            padding: 24px;
+        }
+
+        .test {
+            width: 50%;
+            margin: 0 auto;
+            padding: 24px;
+            color: #000;
+            border: 1px solid #ddd;
+            background-color: #fff;
+        }
+    </style>
+</head>
+<body>
+    <div class="test">
+        <h2>jQuery Animate Color</h2>
+
+        <button data-color="#89e864">Change Color: Green</button>
+        <button data-color="#ffa740">Change Color: Orange</button>
+    </div>
+
+    <script src="js/jquery.1.9.1.min.js"></script>
+    <script src="animate_color.js"></script>
+
+    <script>
+        (function ($) {
+            $('body').on('click', 'button', function (e) {
+                e.preventDefault();
+
+                var $this = $(this),
+                    color = $this.data('color'),
+                    holder = $this.parent();
+
+                holder.animate({
+                    'backgroundColor': color
+                }, 2000);
+
+                console.log('animate color:', color);
+            });
+        }(jQuery));
+    </script>
+</body>
+</html>
