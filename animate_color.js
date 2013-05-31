@@ -1,7 +1,13 @@
 // jQuery Animate Color
 // @cointilt
-// version 1
-(function ($) {
+// version 1.0.1
+;(function (factory) {
+    if (typeof define === 'function' && define.amd) {
+        define(['jquery'], factory);
+    } else {
+        factory(jQuery);
+    }
+}(function ($) {
     "use strict";
 
     var Color = {
@@ -103,4 +109,4 @@
             }
         };
     });
-}(jQuery));
+}));
